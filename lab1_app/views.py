@@ -3,11 +3,19 @@ from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework import generics
 from .serializers import UserSerializer, GroupSerializer
+from rest_framework_swagger.views import get_swagger_view
+from django.conf.urls import url
 
 
 from .models import Language, Word
 from .serializers import LanguageSerializers, WordSerializer
 
+
+schema_view = get_swagger_view(title='Pastebin API')
+
+urlpatterns = [
+    url(r'^$', schema_view)
+]
 
 class UserViewSet(viewsets.ModelViewSet):
     """

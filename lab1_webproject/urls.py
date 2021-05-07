@@ -35,9 +35,22 @@ urlpatterns = [
     path('openapi',
          get_schema_view(
             title="lab1_app",
-            description="API for text Markup, "
-                        "the API can store marked data for Sentimental Analysis and Named Entity Recognition",
+            description="API for Dictionary, "
+                        "the API can store words and their translation",
             version="1.0.0"
          ),
          name='openapi-schema'),
+    path('redoc/',
+         TemplateView.as_view(
+                    template_name='redoc.html',
+                    extra_context={'schema_url': 'openapi-schema'}
+         ),
+         name='redoc'),
+
+    path('swagger-ui/',
+         TemplateView.as_view(
+            template_name='swagger-ui.html',
+            extra_context={'schema_url': 'openapi-schema'}
+         ),
+         name='swagger-ui'),
 ]
