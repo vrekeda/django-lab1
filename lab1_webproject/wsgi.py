@@ -1,5 +1,5 @@
 """
-WSGI config for lab1_webPr project.
+WSGI config for lab1_webproject project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lab1_webPr.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lab1_webproject.settings')
 
 application = get_wsgi_application()

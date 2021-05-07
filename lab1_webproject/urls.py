@@ -1,4 +1,4 @@
-"""lab1_webPr URL Configuration
+"""lab1_webproject URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.2/topics/http/urls/
@@ -13,17 +13,31 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-# from django.contrib import admin
-# from django.urls import path
-
-# urlpatterns = [
-#     path('admin/', admin.site.urls),
-# ]
-
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import path, include
+from django.views.generic import TemplateView
+from rest_framework import routers
+from rest_framework.schemas import get_schema_view
+from lab1_app import views
+
+router = routers.DefaultRouter()
+router.register(r'users', views.UserViewSet)
+router.register(r'groups', views.GroupViewSet)
+router.register(r'language', views.LanguageViewSet, 'language')
+router.register(r'word', views.WordViewSet, 'word')
+
 
 urlpatterns = [
-    path("", include("lab1app.urls")),
-    path('admin/', admin.site.urls)
+    path('', include(router.urls)),
+    path('account/register', views.UserCreate.as_view()),
+    path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('openapi',
+         get_schema_view(
+            title="lab1_app",
+            description="API for text Markup, "
+                        "the API can store marked data for Sentimental Analysis and Named Entity Recognition",
+            version="1.0.0"
+         ),
+         name='openapi-schema'),
 ]
