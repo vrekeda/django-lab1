@@ -7,15 +7,11 @@ from rest_framework_swagger.views import get_swagger_view
 from django.conf.urls import url
 
 
-from .models import Language, Word
+from .models import Language, Word, ConnectedUsers
 from .serializers import LanguageSerializers, WordSerializer
+from django.http import HttpResponse
+from django.shortcuts import render
 
-
-schema_view = get_swagger_view(title='Pastebin API')
-
-urlpatterns = [
-    url(r'^$', schema_view)
-]
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -55,3 +51,35 @@ class WordViewSet(viewsets.ModelViewSet):
         permissions.IsAuthenticated
     ]
     serializer_class = WordSerializer
+
+
+def index(request):
+    languages = [user for user in Language.objects.all()]
+    return render(request, 'index.html', {
+        'languages': languages
+    })
+
+
+def room(request, language_id):
+    # Send article by id to user
+    lang = Language.objects.get(id=language_id)
+    languages_list = Language.objects.all()
+    words = [word for word in Word.objects.filter(translate_from=language_id)]
+    if lang:
+        return render(request, 'room.html', {
+            'language_id': language_id,
+            'name': lang.name,
+            'ukrainian_name': lang.ukrainian_name,
+            'words': words,
+            'languages_list': languages_list
+        })
+    else:
+        return HttpResponse('Wrong language id')
+
+
+def users_online(request):
+    if request.user.is_authenticated:
+        connected_users = [user for user in ConnectedUsers.objects.all()]
+        return render(request, 'online.html', {
+            'connected_users': connected_users
+        })
