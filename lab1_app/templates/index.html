@@ -1,0 +1,35 @@
+<!-- chat/templates/chat/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Language</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>name</th>
+                <th>ukrainian_name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        
+        {% for language in languages %}
+            <tr>
+                <td>{{language.name}}</td>
+                <td>{{language.ukrainian_name}}</td>
+                <td><button onclick="openLanguage({{language.id}})">Click me</button></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        function openLanguage(language_id){
+            window.location.pathname = '/lab/' + language_id + '/';
+        }
+    </script>
+</body>
+</html>
