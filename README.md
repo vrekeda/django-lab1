@@ -12,7 +12,7 @@ Student: _Volodymyr Rekeda KV-01mp_
 [Google Doc](https://docs.google.com/document/d/1NDP1SLLkiC6EgvUTmTXYZoexK3SUvvXCZWSobtX95gs/edit?usp=sharing)
 
 
-***Laboratory work №2***
+***Laboratory work №3***
 
 Student: _Volodymyr Rekeda KV-01mp_
 
